@@ -14,7 +14,9 @@ const app = express();
 const PORT = process.env.port || 3000;
 
 // Sets up the Express app to handle data parsing
-app.use(bodyParser.urlencoded({extended : false}));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 
@@ -26,12 +28,12 @@ const loaderRoute = require('./routes/loader')(app);
 mongoose.connect('mongodb://localhost/pokedex');
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', () => {
-  console.log(`Database connected!`)
+  console.log(`Database connected!`);
 });
 
 
 // Start listening server 
 
 app.listen(PORT, function () {
-    console.log('App listening at port ', PORT);
+  console.log('App listening at port ', PORT);
 });

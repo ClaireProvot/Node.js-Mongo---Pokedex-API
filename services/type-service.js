@@ -4,7 +4,7 @@ const Type = require('../models/types');
 // Import data from JSON file
 const TypesJson = require('../../Pokedex-assignment/data/types.json');
 
-// Populate data of table 'Types' with a loop
+// Populate data of collection 'Types' with a loop
 const loadTypes = () => {
     let allPromises = [];
 
@@ -16,7 +16,9 @@ const loadTypes = () => {
             cname: TypesJson[i].cname,
             ename: TypesJson[i].ename,
             jname: TypesJson[i].jname,
-        }, {collection: 'Type'});
+        }, {
+            collection: 'Type'
+        });
         allPromises.push(type.save());
         i++;
     }

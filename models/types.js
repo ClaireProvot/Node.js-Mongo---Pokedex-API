@@ -1,22 +1,19 @@
 // Module dependencies.
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectId = mongoose.Types.ObjectId;
 
-// Schema definition
+// Schema definition of Type collection
 
 const type = new Schema({
     _id: Number,
     ename: String,
     jname: String,
-    cname: String
+    cname: [{
+        type: Schema.ObjectId,
+        ref: 'Pokemon'
+    }],
 });
-
-// association with pokemons db
-type.virtual('pokemon', {
-    ref: 'Pokemon',
-    localField: 'id',
-    foreignField: 'type'
-})
 
 // Define model 
 
