@@ -10,6 +10,7 @@ module.exports = (app) => {
 		console.log('pokemon skipped:', parseInt(req.query.skip));
 		pokemonService.findAll(parseInt(req.query.skip))
 			.then((result) => {
+				console.log('pokemon :', result)
 				return res.json(result);
 			})
 	});

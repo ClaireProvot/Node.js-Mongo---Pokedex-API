@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ObjectId = mongoose.Types.ObjectId;
 
 // Schema definition of Pokemon collection
 // FIXME: Joint collection with type
@@ -17,7 +16,7 @@ const pokemon = new Schema({
     },
     cname: String,
     ename: String,
-    _id: String,
+    id: Number,
     jname: String,
     skills: {
         egg: [Number],
@@ -26,10 +25,7 @@ const pokemon = new Schema({
         transfer: [Number],
         tutor: [Number],
     },
-    type: [{
-        type: Schema.ObjectId,
-        ref: 'Type'
-    }],
+    type: [{ type: Schema.Types.ObjectId, ref: 'Type' }]
 });
 
 // Define model 
