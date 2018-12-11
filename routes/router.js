@@ -11,7 +11,9 @@ module.exports = (app) => {
 		pokemonService.findAll(parseInt(req.query.skip))
 			.then((result) => {
 				console.log('pokemon :', result)
-				return res.json(result);
+				return res.status(200).json(result);
+			}).catch((err) => { 
+				 return res.status(500).send(err);
 			})
 	});
 
@@ -20,22 +22,42 @@ module.exports = (app) => {
 		console.log('id pokemon found:', req.params.id);
 		pokemonService.findById(req.params.id)
 			.then((result) => {
-				return res.json(result);
-			})
+				return res.status(200).json(result);
+			}).catch((err) => { 
+				return res.status(500).send(err);
+		   })
 	});
 
 	app.put('/pokemons/:id', (req, res) => {
 		// Update a 'pokemon'
-		res.json(result);
+		pokemonService.updateById(req.body.id, req.body)
+		.then((result) => {
+			return res.status(200).json(result);
+		}).catch((err) => { 
+			return res.status(500).send(err);
+	   })
 	});
 
 	app.post('/pokemons/:id', (req, res) => {
 		// Create a pokemon
-		res.json(result);
+		pokemonService.create(req.body)
+		.then((result) => {
+			return res.status(200).json(result);
+		}).catch((err) => { 
+			return res.status(500).send(err);
+	   })
 	});
 
 	app.delete('/pokemons/:id', (req, res) => {
-		// Delete a pokemon
-		res.json({});
+		pokemonService.removeById(req.params.id)
+		.then((result) => {
+			const response = {
+			message: "Pokemon successfully deleted",
+			id: req.params.id
+		};
+			return res.status(200).json(response);
+		}).catch((err) => { 
+			return res.status(500).send(err);
+	   })
 	});
 };

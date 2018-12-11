@@ -74,12 +74,38 @@ const findAll = (skip = 0) => {
 const findById = (id = "001") => {
     // Get all the pokemons  by Id
     return Pokemon
-        .findById(id)
+        .findOne({ id: id})
+        .populate('type')
         .exec()
+};
+
+const updateById = (id, body) => {
+    // Update 
+    return Pokemon
+    .findOneAndUpdate(
+        {id: id},
+        body,
+        {new: true})
+    .populate('type')
+    .exec()
+};
+
+const create = (req) => {
+    const newPokemon = new Pokemon(req);
+    return newPokemon.save();
+};
+
+const removeById = (id) => {
+    return Pokemon
+    .remove({id: id})
+    .exec()
 };
 
 module.exports = {
     loadPokemons: loadPokemons,
     findAll: findAll,
-    findById: findById
+    findById: findById,
+    updateById: updateById,
+    create: create,
+    removeById,
 };
