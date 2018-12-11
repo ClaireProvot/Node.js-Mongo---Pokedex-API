@@ -16,10 +16,9 @@ const loadPokemons = () => {
         let allPromises = [];
         let Poke = PokemonsJson[j];
 
-        Type.findOne(
-            { cname: Poke.type[0]
+        Type.findOne({
+            cname: Poke.type[0]
         }).exec().then((typeFound) => {
-            console.log(typeFound._id);
             let pokemon = new Pokemon({
                 base: {
                     Attack: Poke.base.Attack,
@@ -42,11 +41,21 @@ const loadPokemons = () => {
                 },
                 type: typeFound._id
             });
+            if (Poke.type[1]) {
+                Type.findOne({
+                    cname: Poke.type[1]
+                }).exec().then((typeFound2) => {
+                    return Pokemon.updateOne({
+                        id: Poke.id
+                        }, { $push: { type: typeFound2._id }
+                    })
+                })
+            }
             return allPromises.push(pokemon.save());
         }).catch((err) => {
-        return console.log(err);
-    })
-    j++;
+            return console.log(err);
+        })
+        j++;
     };
     return Promise.all(allPromises);
 };
