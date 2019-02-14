@@ -107,5 +107,5 @@ module.exports = {
     findById: findById,
     updateById: updateById,
     create: create,
-    removeById,
+    removeById: removeById,
 };
